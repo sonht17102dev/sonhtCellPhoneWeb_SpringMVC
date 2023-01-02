@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns="http://www.springframework.org/schema/beans">
+	<mvc:annotation-driven />
+	<context:component-scan
+		base-package="controller" />
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- Map the css foler with css foler under resources -->
+
+	<mvc:resources location="/resources/"
+		mapping="/resources/**" />
+
+	<!-- Map the images foler with images foler under resources -->
+	<mvc:resources location="/resources/"
+		mapping="/resources/**" />
+	<mvc:annotation-driven />
+	
+	<!-- Initialization for data source -->
+	<bean id = "dataSource"
+		class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name = "driverClassName" value = "com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+		<property name = "url" value = "jdbc:sqlserver://localhost:1433;databaseName=ShoppingDB;encrypt=true;trustServerCertificate=true;"/>
+		<property name = "username" value = "sa"/>
+		<property name = "password" value = "123"/>
+	</bean>   
+	
+	<!-- Definition for studentJDBCTemplate bean -->
+	<bean id = "accountJDBCTemplate" 
+      class = "DAO.AccountJDBCTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+</beans>   
